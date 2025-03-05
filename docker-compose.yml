@@ -49,7 +49,7 @@ services:
       - SELENIUM_HOST=selenium_hub3
       - AUTO_RECORD=true
   
-  chrome6:
+  chrome:
     image: selenium/node-chrome:beta
     shm_size: 2gb
     depends_on:
