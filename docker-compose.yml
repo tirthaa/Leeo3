@@ -11,6 +11,8 @@ services:
       - 4444:4444
       - 4462:4462
       - 4463:4463      
+      - 4442:4442       
+      - 4443:4443      
   
   real_device:
     image: appium/appium
@@ -26,6 +28,26 @@ services:
       - CONNECT_TO_GRID=true
       - SELENIUM_HOST=selenium_hub3
       - RELAXED_SECURITY=true
+
+  chrome:
+    image: selenium/node-chrome:beta
+    shm_size: 2gb
+    depends_on:
+      - selenium_hub3
+    environment:
+      - SE_EVENT_BUS_HOST=selenium_hub3
+      - SE_EVENT_BUS_PUBLISH_PORT=4462
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463
+  
+  chrome1:
+    image: selenium/node-chrome:beta
+    shm_size: 2gb
+    depends_on:
+      - selenium_hub3
+    environment:
+      - SE_EVENT_BUS_HOST=selenium_hub3
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443      
   
   nexus_7.1.1:
     image: oklabs/docker-android-x86-7.1.1:latest
@@ -48,23 +70,3 @@ services:
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub3
       - AUTO_RECORD=true
-  
-  chrome:
-    image: selenium/node-chrome:beta
-    shm_size: 2gb
-    depends_on:
-      - selenium_hub3
-    environment:
-      - SE_EVENT_BUS_HOST=selenium_hub3
-      - SE_EVENT_BUS_PUBLISH_PORT=4462
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463
-  
-  chrome1:
-    image: selenium/node-chrome:beta
-    shm_size: 2gb
-    depends_on:
-      - selenium_hub3
-    environment:
-      - SE_EVENT_BUS_HOST=selenium_hub3
-      - SE_EVENT_BUS_PUBLISH_PORT=4462
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463      
