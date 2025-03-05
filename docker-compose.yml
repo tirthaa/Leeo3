@@ -9,6 +9,8 @@ services:
     image: selenium/hub:3.14.0-curium
     ports:
       - 4444:4444
+      - 4462:4462
+      - 4463:4463      
   
   real_device:
     image: appium/appium
@@ -46,3 +48,13 @@ services:
       - APPIUM=true
       - SELENIUM_HOST=selenium_hub
       - AUTO_RECORD=true
+  
+  chrome6:
+    image: selenium/node-chrome:beta
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub6
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub6
+      - SE_EVENT_BUS_PUBLISH_PORT=4462
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463
