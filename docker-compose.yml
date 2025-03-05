@@ -46,8 +46,8 @@ services:
       - selenium_hub3
     environment:
       - SE_EVENT_BUS_HOST=selenium_hub3
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443      
+      - SE_EVENT_BUS_PUBLISH_PORT=4462
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463      
   
   nexus_7.1.1:
     image: oklabs/docker-android-x86-7.1.1:latest
