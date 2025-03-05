@@ -1,7 +1,7 @@
 services:
-  selenium_hub3:
+  selenium_hub7:
     image: selenium/hub:latest
-    container_name: selenium_hub3
+    container_name: selenium_hub7
     ports:
       - 4441:4441
       - 4442:4442
@@ -12,9 +12,9 @@ services:
     image: selenium/node-chrome:beta
     shm_size: 2gb
     depends_on:
-      - selenium_hub3
+      - selenium_hub7
     environment:
-      - SE_EVENT_BUS_HOST=selenium_hub3
+      - SE_EVENT_BUS_HOST=selenium_hub7
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
   
@@ -22,17 +22,17 @@ services:
     image: selenium/node-chrome:beta
     shm_size: 2gb
     depends_on:
-      - selenium_hub3
+      - selenium_hub7
     environment:
-      - SE_EVENT_BUS_HOST=selenium_hub3
+      - SE_EVENT_BUS_HOST=selenium_hub7
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443            
   
   real_device:
     image: appium/appium
     depends_on:
-      - selenium_hub3
-    network_mode: "service:selenium_hub3"
+      - selenium_hub7
+    network_mode: "service:selenium_hub7"
     privileged: true
     volumes:
       - /dev/bus/usb:/dev/bus/usb
@@ -40,7 +40,7 @@ services:
       - $PWD/example/sample_apk:/root/tmp
     environment:
       - CONNECT_TO_GRID=true
-      - SELENIUM_HOST=selenium_hub3
+      - SELENIUM_HOST=selenium_hub7
       - RELAXED_SECURITY=true
   
   nexus_7.1.1:
@@ -48,7 +48,7 @@ services:
     privileged: true
     scale: 1
     depends_on:
-      - selenium_hub3
+      - selenium_hub7
       - real_device
     ports:
       - 6080:6080
@@ -62,5 +62,5 @@ services:
       - DEVICE=Nexus 5
       - CONNECT_TO_GRID=true
       - APPIUM=true
-      - SELENIUM_HOST=selenium_hub3
+      - SELENIUM_HOST=selenium_hub7
       - AUTO_RECORD=true
