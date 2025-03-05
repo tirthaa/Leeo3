@@ -3,7 +3,7 @@ pipeline{
 	stages{
 		stage("Start Grid"){
 			steps{
-				sh "docker-compose up -d selenium-hub6 chrome6"
+				sh "docker-compose up -d"
 				}
 			}
 		stage("Run Test"){
