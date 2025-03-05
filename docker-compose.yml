@@ -14,21 +14,6 @@ services:
       - 4442:4442       
       - 4443:4443      
   
-  real_device:
-    image: appium/appium
-    depends_on:
-      - selenium_hub3
-    network_mode: "service:selenium_hub3"
-    privileged: true
-    volumes:
-      - /dev/bus/usb:/dev/bus/usb
-      - ~/.android:/root/.android
-      - $PWD/example/sample_apk:/root/tmp
-    environment:
-      - CONNECT_TO_GRID=true
-      - SELENIUM_HOST=selenium_hub3
-      - RELAXED_SECURITY=true
-
   chrome:
     image: selenium/node-chrome:beta
     shm_size: 2gb
@@ -47,7 +32,22 @@ services:
     environment:
       - SE_EVENT_BUS_HOST=selenium_hub3
       - SE_EVENT_BUS_PUBLISH_PORT=4462
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463      
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463  
+  
+  real_device:
+    image: appium/appium
+    depends_on:
+      - selenium_hub3
+    network_mode: "service:selenium_hub3"
+    privileged: true
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - ~/.android:/root/.android
+      - $PWD/example/sample_apk:/root/tmp
+    environment:
+      - CONNECT_TO_GRID=true
+      - SELENIUM_HOST=selenium_hub3
+      - RELAXED_SECURITY=true
   
   nexus_7.1.1:
     image: oklabs/docker-android-x86-7.1.1:latest
