@@ -1,38 +1,32 @@
-# Note: It requires docker-compose 1.13.0
-#
-# Usage: docker-compose up -d
-#version: "2.2"
-
 services:
-  # Selenium hub
-  selenium_hub3:
-    image: selenium/hub:3.14.0-curium
+  selenium-hub4:
+    image: selenium/hub:latest
+    container_name: selenium-hub4
     ports:
-      - 4444:4444
-      - 4462:4462
-      - 4463:4463      
-      - 4442:4442       
-      - 4443:4443      
+      - "4441:4441"
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
   
   chrome:
     image: selenium/node-chrome:beta
     shm_size: 2gb
     depends_on:
-      - selenium_hub3
+      - selenium-hub4
     environment:
-      - SE_EVENT_BUS_HOST=selenium_hub3
-      - SE_EVENT_BUS_PUBLISH_PORT=4462
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463
-  
+      - SE_EVENT_BUS_HOST=selenium-hub4
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      
   chrome1:
     image: selenium/node-chrome:beta
     shm_size: 2gb
     depends_on:
-      - selenium_hub3
+      - selenium-hub4
     environment:
-      - SE_EVENT_BUS_HOST=selenium_hub3
-      - SE_EVENT_BUS_PUBLISH_PORT=4462
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4463  
+      - SE_EVENT_BUS_HOST=selenium-hub4
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
   
   real_device:
     image: appium/appium
