@@ -1,7 +1,7 @@
 services:
-  selenium_hub7:
+  selenium_hub6:
     image: selenium/hub:latest
-    container_name: selenium_hub7
+    container_name: selenium_hub6
     ports:
       - 4441:4441
       - 4442:4442
@@ -12,9 +12,9 @@ services:
     image: selenium/node-chrome:beta
     shm_size: 2gb
     depends_on:
-      - selenium_hub7
+      - selenium_hub6
     environment:
-      - SE_EVENT_BUS_HOST=selenium_hub7
+      - SE_EVENT_BUS_HOST=selenium_hub6
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
   
@@ -22,9 +22,9 @@ services:
     image: selenium/node-chrome:beta
     shm_size: 2gb
     depends_on:
-      - selenium_hub7
+      - selenium_hub6
     environment:
-      - SE_EVENT_BUS_HOST=selenium_hub7
+      - SE_EVENT_BUS_HOST=selenium_hub6
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443    
   
@@ -33,7 +33,7 @@ services:
     privileged: true
     scale: 1
     depends_on:
-      - selenium_hub7
+      - selenium_hub6
     ports:
       - 6080:6080
       - 4723:4723
@@ -46,5 +46,5 @@ services:
       - DEVICE=Nexus 5
       - CONNECT_TO_GRID=true
       - APPIUM=true
-      - SELENIUM_HOST=selenium_hub7
+      - SELENIUM_HOST=selenium_hub6
       - AUTO_RECORD=true
